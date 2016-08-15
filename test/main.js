@@ -9,6 +9,7 @@ var HTTP_SC_FORBIDDEN = 403;
 
 var app = supertest("http://localhost:8080/ejdcard/api/");
 var CARD_RESOURCE = "card/";
+var LOG_RESOURCE = 'log/';
 
 function generateRandomId(){
     return parseInt(Math.random()*700);
@@ -436,14 +437,62 @@ describe('ejdcard', function(){
     describe('Setting card status to unactive and trying to execute operations after', function(){
 
         it('Should return 200 OK and return the object', function(done){
-
+            var setUnactive = {
+                active: false
+            };
+            app.patch(CARD_RESOURCE+'102')
+               .send(setUnactive)
+               .expect(HTTP_SC_OK)
+               .expect('Content-type', /json/)
+               .end(function(err, res){
+                   if (err) return done(err);
+                   res.body.should.have.property('owner');
+                   res.body.should.have.property("active").equal(false);
+                   res.body.should.have.property("logId");
+                   var log = res.body.logId;
+                   res.body.owner.should.have.property('name').equal('Lucianinho Junior');
+                   var trying = {balance: 1000};
+                   app.patch(CARD_RESOURCE+'102')
+                      .send(trying)
+                      .expect(HTTP_SC_NOT_ACCEPTABLE)
+                      .expect('Content-type', /json/)
+                      .end(function(err, res){
+                          if (err) return done(err);
+                          res.body.should.have.property('err').equal('This card was desatived - LOG ID: '+log);
+                          done();
+                      });
+               });
         });
 
         it('Should return 200 OK and return the object', function(done){
-            
+            var setUnactive = {
+                active: false
+            };
+            app.patch(CARD_RESOURCE+'101')
+               .send(setUnactive)
+               .expect(HTTP_SC_OK)
+               .expect('Content-type', /json/)
+               .end(function(err, res){
+                   if (err) return done(err);
+                   res.body.should.have.property('owner');
+                   res.body.should.have.property("active").equal(false);
+                   res.body.should.have.property("logId");
+                   var log = res.body.logId;
+                   res.body.owner.should.have.property('name').equal('Lucianinho Junior');
+                   var trying = {balance: 1000};
+                   app.patch(CARD_RESOURCE+'101')
+                      .send(trying)
+                      .expect(HTTP_SC_NOT_ACCEPTABLE)
+                      .expect('Content-type', /json/)
+                      .end(function(err, res){
+                          if (err) return done(err);
+                          res.body.should.have.property('err').equal('This card was desatived - LOG ID: '+log);
+                          done();
+                      });
+               });
         });
 
-        
+
     });
 
     describe('Making operations and checking the log object', function(){
