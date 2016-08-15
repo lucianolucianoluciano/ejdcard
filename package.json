@@ -1,0 +1,22 @@
+{
+  "name": "ejdcard",
+  "version": "1.0.0",
+  "description": "Sistema de gestão de pagamentos para o Encontrão EJD",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Luciano Junior",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^3.0.2",
+    "should": "^11.0.0",
+    "supertest": "^2.0.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "lodash": "^4.15.0",
+    "mongoose": "^4.5.8"
+  }
+}
