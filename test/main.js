@@ -32,7 +32,7 @@ describe('ejdcard', function(){
         });
 
         it('Should return 404 NOT FOUND at DELETE', function(done){
-            app.delete(CARD_RESOURCE+generateRandomId().toString())
+            app.del(CARD_RESOURCE+generateRandomId().toString())
                .expect(HTTP_SC_NOT_FOUND, done);
         });
     });
