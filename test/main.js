@@ -458,7 +458,7 @@ describe('ejdcard', function(){
                       .expect('Content-type', /json/)
                       .end(function(err, res){
                           if (err) return done(err);
-                          res.body.should.have.property('err').equal('This card was desatived - LOG ID: '+log);
+                          res.body.should.have.property('err').equal('This card was deactived - LOG ID: '+log);
                           done();
                       });
                });
@@ -486,7 +486,7 @@ describe('ejdcard', function(){
                       .expect('Content-type', /json/)
                       .end(function(err, res){
                           if (err) return done(err);
-                          res.body.should.have.property('err').equal('This card was desatived - LOG ID: '+log);
+                          res.body.should.have.property('err').equal('This card was deactived - LOG ID: '+log);
                           done();
                       });
                });
@@ -496,6 +496,36 @@ describe('ejdcard', function(){
     });
 
     describe('Making operations and checking the log object', function(){
+
+        it('Should return the correct log object after making a operations', function(done){
+            var op = {
+                balance: 100
+            };
+            app.patch(CARD_RESOURCE+'100')
+               .send(op)
+               .expect(HTTP_SC_OK)
+               .expect('Content-type', /json/)
+               .end(function(err, res){
+                   if (err) return done(err);
+                   res.body.should.have.property('balance').equal(100);
+                   res.body.should.have.property('owner');
+                   res.body.owner.should.have.property('name').equal('Lucianinho Junior');
+                   res.body.should.have.property('logId');
+                   var log = res.body.logId;
+                   app.get(LOG_RESOURCE+log)
+                      .expect(HTTP_SC_OK)
+                      .expect('Content-type', /json/)
+                      .end(function(err, res){
+                          if (err) return done(err);
+                          res.body.should.have.property('timestamp').and.should.be.a.type('number');
+                          res.body.should.have.property('balanceBefore').and.should.be.a.type('number');
+                          res.body.should.have.property('balanceAfter').and.should.be.a.type('number');
+                          res.body.should.have.property('station').and.should.be.a.type('string');
+                          res.body.should.have.property('type').and.should.be.a.type('string');
+                          // FALTA TERMINAR
+                      });
+               });
+        });
 
     });
 
