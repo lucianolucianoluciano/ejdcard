@@ -145,7 +145,20 @@ describe('ejdcard', function(){
                    if (err) return done(err);
                    res.body.should.have.property("_id").equal("100");
                    res.body.should.have.property("logId");
-                   done();
+                   var log = res.body.logId;
+                   app.get(LOG_RESOURCE+log)
+                      .expect(HTTP_SC_OK)
+                      .expect('Content-type', /json/)
+                      .end(function(err, res){
+                          if (err) return done(err);
+                          res.body.should.have.property('timestamp').and.should.be.a.type('number');
+                          res.body.should.have.property('balanceBefore').and.should.be.a.type('number').equal(0);
+                          res.body.should.have.property('balanceAfter').and.should.be.a.type('number').equal(0);
+                          res.body.should.have.property('cardNumber').and.should.be.a.type('string').equal('100');
+                          res.body.should.have.property('station').and.should.be.a.type('string');
+                          res.body.should.have.property('type').and.should.be.a.type('number').equal(1);
+                          done();
+                      });
                });
         });
 
@@ -170,7 +183,20 @@ describe('ejdcard', function(){
                    res.body.owner.should.have.property("name").equal("Lucianinho Junior");
                    res.body.owner.should.not.have.property("cellphone");
                    res.body.should.have.property("logId");
-                   done();
+                   var log = res.body.logId;
+                   app.get(LOG_RESOURCE+log)
+                      .expect(HTTP_SC_OK)
+                      .expect('Content-type', /json/)
+                      .end(function(err, res){
+                          if (err) return done(err);
+                          res.body.should.have.property('timestamp').and.should.be.a.type('number');
+                          res.body.should.have.property('balanceBefore').and.should.be.a.type('number').equal(0);
+                          res.body.should.have.property('balanceAfter').and.should.be.a.type('number').equal(0);
+                          res.body.should.have.property('cardNumber').and.should.be.a.type('string').equal('101');
+                          res.body.should.have.property('station').and.should.be.a.type('string');
+                          res.body.should.have.property('type').and.should.be.a.type('number').equal(1);
+                          done();
+                      });
                });
         });
 
@@ -189,14 +215,27 @@ describe('ejdcard', function(){
                .expect('Content-type', /json/)
                .end(function(err, res){
                    if (err) return done(err);
-                   res.body.should.have.property("_id").equal("100");
+                   res.body.should.have.property("_id").equal("102");
                    res.body.should.have.property("balance").equal(1299);
                    res.body.should.have.property("active").equal(true);
                    res.body.should.have.property("owner");
                    res.body.owner.should.have.property("name").equal("Lucianinho Junior");
                    res.body.owner.should.have.property("cellphone").equal("(83)98827-2999");
                    res.body.should.have.property("logId");
-                   done();
+                   var log = res.body.logId;
+                   app.get(LOG_RESOURCE+log)
+                      .expect(HTTP_SC_OK)
+                      .expect('Content-type', /json/)
+                      .end(function(err, res){
+                          if (err) return done(err);
+                          res.body.should.have.property('timestamp').and.should.be.a.type('number');
+                          res.body.should.have.property('balanceBefore').and.should.be.a.type('number').equal(0);
+                          res.body.should.have.property('balanceAfter').and.should.be.a.type('number').equal(1299);
+                          res.body.should.have.property('cardNumber').and.should.be.a.type('string').equal('102');
+                          res.body.should.have.property('station').and.should.be.a.type('string');
+                          res.body.should.have.property('type').and.should.be.a.type('number').equal(1);
+                          done();
+                      });
                });
         });
     });
@@ -352,17 +391,32 @@ describe('ejdcard', function(){
                    res.body.should.have.property('owner');
                    res.body.should.have.property('logId');
                    res.body.owner.should.have.property('name').equal('Lucianinho Junior');
+                   var log = res.body.logId;
 
-                   app.get(CARD_RESOURCE+'101')
+                   app.get(LOG_RESOURCE+log)
                       .expect(HTTP_SC_OK)
                       .expect('Content-type', /json/)
                       .end(function(err, res){
                           if (err) return done(err);
-                          res.body.should.have.property('balance').equal(1000);
-                          res.body.should.have.property('owner');
-                          res.body.owner.should.have.property('name').equal('Lucianinho Junior');
-                          done();
+                          res.body.should.have.property('timestamp').and.should.be.a.type('number');
+                          res.body.should.have.property('balanceBefore').and.should.be.a.type('number').equal(0);
+                          res.body.should.have.property('balanceAfter').and.should.be.a.type('number').equal(1000);
+                          res.body.should.have.property('cardNumber').and.should.be.a.type('string').equal('101');
+                          res.body.should.have.property('station').and.should.be.a.type('string');
+                          res.body.should.have.property('type').and.should.be.a.type('number').equal(3);
+                          app.get(CARD_RESOURCE+'101')
+                            .expect(HTTP_SC_OK)
+                            .expect('Content-type', /json/)
+                            .end(function(err, res){
+                                if (err) return done(err);
+                                res.body.should.have.property('balance').equal(1000);
+                                res.body.should.have.property('owner');
+                                res.body.owner.should.have.property('name').equal('Lucianinho Junior');
+                                done();
+                            });
                       });
+
+                   
                });
 
         });
@@ -521,8 +575,37 @@ describe('ejdcard', function(){
                           res.body.should.have.property('balanceBefore').and.should.be.a.type('number');
                           res.body.should.have.property('balanceAfter').and.should.be.a.type('number');
                           res.body.should.have.property('station').and.should.be.a.type('string');
-                          res.body.should.have.property('type').and.should.be.a.type('string');
-                          // FALTA TERMINAR
+                          res.body.should.have.property('type').and.should.be.a.type('number').equal(2);
+                          done();
+                      });
+               });
+        });
+
+        it('Should return the correct log object after making a operation', function(done){
+            var op = {
+                balance: 100
+            };
+            app.patch(CARD_RESOURCE+'100')
+               .send(op)
+               .expect(HTTP_SC_OK)
+               .expect('Content-type', /json/)
+               .end(function(err, res){
+                   if (err) return done(err);
+                   res.body.should.have.property('balance').equal(100);
+                   res.body.should.have.property('owner');
+                   res.body.owner.should.have.property('name').equal('Lucianinho Junior');
+                   res.body.should.have.property('logId');
+                   var log = res.body.logId;
+                   app.get(LOG_RESOURCE+log)
+                      .expect(HTTP_SC_OK)
+                      .expect('Content-type', /json/)
+                      .end(function(err, res){
+                          if (err) return done(err);
+                          res.body.should.have.property('timestamp').and.should.be.a.type('number');
+                          res.body.should.have.property('balanceBefore').and.should.be.a.type('number');
+                          res.body.should.have.property('balanceAfter').and.should.be.a.type('number');
+                          res.body.should.have.property('station').and.should.be.a.type('string');
+                          res.body.should.have.property('type').and.should.be.a.type('number');
                       });
                });
         });

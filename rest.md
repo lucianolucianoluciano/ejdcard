@@ -66,7 +66,7 @@ Objeto Cartão
  Objeto Log 
 
 {"_id": String,
- "type": String,
+ "type": Number,
  "timestamp": Number, 
  "cardNumber": String,
  "station": String,
