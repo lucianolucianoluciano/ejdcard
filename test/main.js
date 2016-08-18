@@ -285,7 +285,7 @@ describe('ejdcard', function(){
 
     describe('Changing balance of cards with invalid data', function(){
 
-        it('Should return 406 NOT ACCEPTABLE when modifying blocked fields of the Card', function(dona){
+        it('Should return 406 NOT ACCEPTABLE when modifying blocked fields of the Card', function(done){
             
             var modified = {
                 _id: "103"
@@ -302,7 +302,7 @@ describe('ejdcard', function(){
                 });
         });
 
-        it('Should return 406 NOT ACCEPTABLE when modifying balance to a negative number', function(dona){
+        it('Should return 406 NOT ACCEPTABLE when modifying balance to a negative number', function(done){
             
             var modified = {
                 balance: -20
@@ -319,7 +319,7 @@ describe('ejdcard', function(){
                 });
         });
 
-        it('Should return 406 NOT ACCEPTABLE when modifying the card with a invalid field', function(dona){
+        it('Should return 406 NOT ACCEPTABLE when modifying the card with a invalid field', function(done){
             
             var modified = {
                 marilia: "mendonça"
@@ -336,7 +336,7 @@ describe('ejdcard', function(){
                 });
         });
 
-        it('Should return 406 NOT ACCEPTABLE when modifying the balance with another type', function(dona){
+        it('Should return 406 NOT ACCEPTABLE when modifying the balance with another type', function(done){
             
             var modified = {
                 balance: "500 conto"
@@ -353,7 +353,7 @@ describe('ejdcard', function(){
                 });
         });
 
-        it('Should return 406 NOT ACCEPTABLE when modifying the name with another type', function(dona){
+        it('Should return 406 NOT ACCEPTABLE when modifying the name with another type', function(done){
             
             var modified = {
                 owner: {
@@ -437,17 +437,30 @@ describe('ejdcard', function(){
                    res.body.should.have.property('owner');
                    res.body.should.have.property('logId');
                    res.body.owner.should.have.property('name').equal('Lucianinho Junior');
+                   var log = res.body.logId;
 
-                   app.get(CARD_RESOURCE+'102')
+                   app.get(LOG_RESOURCE+log)
                       .expect(HTTP_SC_OK)
                       .expect('Content-type', /json/)
                       .end(function(err, res){
                           if (err) return done(err);
-                          res.body.should.have.property('balance').equal(100);
-                          res.body.should.have.property("active").equal(true);
-                          res.body.should.have.property('owner');
-                          res.body.owner.should.have.property('name').equal('Lucianinho Junior');
-                          done();
+                          res.body.should.have.property('timestamp').and.should.be.a.type('number');
+                          res.body.should.have.property('balanceBefore').and.should.be.a.type('number').equal(0);
+                          res.body.should.have.property('balanceAfter').and.should.be.a.type('number').equal(100);
+                          res.body.should.have.property('cardNumber').and.should.be.a.type('string').equal('102');
+                          res.body.should.have.property('station').and.should.be.a.type('string');
+                          res.body.should.have.property('type').and.should.be.a.type('number').equal(2);
+                          app.get(CARD_RESOURCE+'102')
+                            .expect(HTTP_SC_OK)
+                            .expect('Content-type', /json/)
+                            .end(function(err, res){
+                                if (err) return done(err);
+                                res.body.should.have.property('balance').equal(100);
+                                res.body.should.have.property("active").equal(true);
+                                res.body.should.have.property('owner');
+                                res.body.owner.should.have.property('name').equal('Lucianinho Junior');
+                                done();
+                            });
                       });
                });
 
@@ -483,9 +496,7 @@ describe('ejdcard', function(){
                           done();
                       });
                });
-
         });
-
     });
 
     describe('Setting card status to unactive and trying to execute operations after', function(){
