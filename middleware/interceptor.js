@@ -17,6 +17,6 @@ module.exports = function(req, res, next){
 		});
 		
 	}else{
-		res.status(403).json({err: [true, "Not authorized"]});
+		res.status(403).json({err: "Not authorized"});
 	}
 }

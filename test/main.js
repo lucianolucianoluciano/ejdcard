@@ -7,7 +7,11 @@ var HTTP_SC_NOT_FOUND = 404;
 var HTTP_SC_NOT_ACCEPTABLE = 406;
 var HTTP_SC_FORBIDDEN = 403;
 
-var app = supertest("http://localhost:8080/ejdcard/api/");
+var app = supertest("http://localhost:3000/ejdcard/api/");
+var headers = {
+    "Authorization": "Bearer "
+};
+var login_app = supertest("http://localhost:3000/ejdcard/access");
 var CARD_RESOURCE = "card/";
 var LOG_RESOURCE = 'log/';
 
@@ -19,9 +23,44 @@ function generateRandomId(){
 
 describe('ejdcard', function(){
 
-    describe('Requesting invalid cards data', function(){
-        it('Should return 404 NOT FOUND at GET', function(done){
+    describe('Trying to do requests without auth', function(){
+        it('Should return 403 at getting some card', function(done){
             app.get(CARD_RESOURCE+generateRandomId().toString())
+               .expect(HTTP_SC_FORBIDDEN)
+               .end(done());
+        });
+        it('Should return 403 at patching data', function(done){
+            app.patch(CARD_RESOURCE+generateRandomId().toString())
+               .send({})
+               .expect(HTTP_SC_FORBIDDEN)
+               .end(done());
+        });
+    });
+
+    describe('Logging in and getting the token', function(){
+
+        it.only('Should return 200 and the token', function(done){
+            var user = {
+                login: "tester",
+                password: "gosafadon"
+            };
+            login_app.post('/login')
+                     .send(user)
+                     .expect(HTTP_SC_OK)
+                     .expect('Content-type', /json/)
+                     .end(function(err, res){
+                         if (err) return done(err);
+                         res.body.should.have.property('token');
+                         headers['Authorization'] += res.body.token;
+                         done();
+                     });
+        });
+
+    });
+    describe('Requesting invalid cards data', function(){
+        it.only('Should return 404 NOT FOUND at GET', function(done){
+            app.get(CARD_RESOURCE+generateRandomId().toString())
+               .set(headers)
                .expect(HTTP_SC_NOT_FOUND)
                .end(done);
         });

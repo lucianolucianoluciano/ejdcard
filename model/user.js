@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
 
@@ -45,7 +46,7 @@ module.exports.getUserByUsername = function(username, cb){
 
 module.exports.checkPassword = function(candidate, hash, cb){
 	bcrypt.compare(candidate, hash, function(err, isMatch){
-		if (err) throw err;
-		cb(null, isMatch);
+		if (err) cb(err, null);
+        else cb(null, isMatch);
 	});
 }
