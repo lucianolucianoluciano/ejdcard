@@ -1,0 +1,16 @@
+  *{
+        font-size: 19px;
+      }
+      h2, h2 strong, h2 span{
+        font-size: 32px;
+      }
+      h3, h3 strong{
+        font-size: 25px;
+      }
+      .btn {
+        font-size: 23px;
+        margin: 10px;
+      }
+      .alert .ng-scope, .alert .ng-binding, .alert .ng-binding b, .alert .ng-binding strong{
+        font-size: 24px;
+      }

@@ -1,0 +1,107 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+#tudo {
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+}
+header {
+    background-color: #4198ff;
+    height: 150px;
+    font: 120px Dosis;
+    color: #fff;
+    text-align: center;
+}
+#canvas {
+    height: 400px;
+}
+#canvas h1{
+    font: 50px Dosis;
+    color: #245181;
+    width: 370px;
+    text-align: center;
+    margin: 25px auto;
+    border: 2px solid #245181;
+}
+#canvas form{
+    width: 370px;
+    margin: 0 auto;
+}
+#canvas form label{
+    font: 23px Dosis;
+    color: #4198ff;
+}
+#canvas form button{
+    width: 101px;
+    height: 31px;
+    float: right;
+    font: 20px Dosis;
+    font-weight: bold;
+    color: #245181;
+    background-color: white;
+    border: 1px solid #245181;
+    padding: 0 0 3px 0 ;
+}
+#canvas form button:hover{
+    cursor: pointer;
+    background-color: #245181;
+    color: white;
+}
+#canvas form button:disabled{
+    background-color: #999999;
+    color: #333333;
+    cursor: default;
+}
+#canvas form input{
+    height: 25px;
+    font: 21px Dosis;
+    color: #245181;
+    margin: 0 0 10px 0;
+}
+#canvas form input[name="nome"]{
+    display: block;
+    width: 99%;
+    margin-top: 5px;
+}
+#canvas form input[name="id"]{
+    width: 20.05%;
+    margin: 0 11% 0 0;
+}
+#canvas form input[name="valorInicial"]{
+    width: 20%;
+}
+#canvas .alert {
+    width: 350px;
+    margin: 0 auto;
+    min-height: 40px;
+    background-color: #ffb5b3;
+    font: 25px Dosis;
+    padding: 10px;
+    text-align: center;
+    color: #db3448;
+    border-radius: 10px;
+    -webkit-transition: all 3s ease;
+    -moz-transition: all 3s ease;
+    -ms-transition: all 3s ease;
+    -o-transition: all 3s ease;
+    transition: all 3s ease;
+    margin-bottom: 10px;
+}
+#canvas .sucesso{
+    width: 350px;
+    margin: 0 auto;
+    min-height: 40px;
+    background-color: #cbedf9;
+    font: 25px Dosis;
+    padding: 10px;
+    text-align: center;
+    color: #4198ff;
+    border-radius: 10px;
+    transition: all 3s ease;
+    margin-bottom: 10px;
+}
+#canvas .sucesso span{
+    color: #000000;
+}

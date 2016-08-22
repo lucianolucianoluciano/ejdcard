@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html ng-app="ejdcard">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>EJDCard - Recarga</title>
+    <link rel="stylesheet" type="text/css" href="recarga.css" />
+    <link href='fontes/Dosis.css' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="angular/angular.js"></script>
+    <script type="text/javascript" src="angular/angular-locale_pt-br.js"></script>
+    <script type="text/javascript" src="recarga.js"></script>
+    <script type="text/javascript" src="angular/angular-cookies.js"></script>
+    <script type="text/javascript" src="money.js"></script>
+    <script type="text/javascript" src="celular.js"></script>
+    <script type="text/javascript" src="angular/angular-sanitize.js"></script>
+    <script type="text/javascript" src="config.js"></script>
+    <script type="text/javascript" src="ejdAPI.js"></script>
+    <link rel="icon" href="favicon.png" type="image/png">
+</head>
+<body ng-controller="recarga">
+<div id="tudo">
+    <header>
+        EJDCard
+    </header>
+    <div id="canvas">
+        <h1>Recarga</h1>
+        <form name="newRecarga">
+
+            <label for="id">Cartão:</label>
+            <input type="text" name="id" ng-keydown="limpar();" ng-model="cartao.id" id="id" placeholder="ex:250" ng-pattern="/^[0-9]{1,3}$/" ng-required="true" ng-disabled="formDisabled">
+
+            <label for="valor">Valor:</label>
+            <input type="text" name="valor" ng-keydown="limpar();" ng-model="cartao.valor" id="valor" ng-required="true" ng-pattern="/^\d{1,3}\,\d{2}$/" money placeholder="ex: 5,50" ng-disabled="formDisabled">
+
+
+            <button ng-click="credito(cartao);" ng-disabled="newRecarga.$invalid || hideBtn" ng-bind="btnTexto"></button>
+        </form>
+        <!-- ERROS DA VALIDAÇÃO NO LADO DO CLIENTE -->
+
+        <div class="alert" ng-show="newRecarga.id.$error.pattern">
+            O campo "Cartão" deve conter um número entre 1 e 700
+        </div>
+
+        <div class="alert" ng-show="newRecarga.valor.$error.pattern">
+            O campo "Valor" deve conter um número no formato "34,50", entre 0,01 e 999,999
+        </div>
+
+        <!-- ERROS DE VALIDAÇÃO PRIMEIRA NO LADO DO SERVIDOR -->
+
+        <div class="alert" ng-show="serverError" ng-bind-html="serverError"></div>
+
+        <!-- BOX PARA CONFIRMAR A VENDA. ACIONADA APÓS RETORNO DO SERVIDOR -->
+
+        <div class="confirma" ng-show="confirmaShow">
+            <b>Nome:</b> {{ confirma.usuario }}<br>
+            <b>Saldo disponível:</b> {{ confirma.saldo | currency}}<br>
+            <h3>Valor da recarga: <span style="color: red;">{{ confirma.valor | currency }}</span></h3>
+            <b>Saldo após a recarga:</b> {{ confirma.proximoSaldo | currency}}<br>
+            <button class="botaoConfirma" ng-click="confirmaConfirmou(confirma);" ng-disabled="confirmaButtonsDisabled">CONFIRMA</button>
+            <button class="botaoCancela" ng-disabled="confirmaButtonsDisabled" ng-click="confirmaCancelou();">CANCELA</button>
+            <div style="clear: both"></div>
+        </div>
+
+        <!-- BOX PARA CONFIRMAR A VENDA EFETUADA -->
+
+        <div class="deuCerto" ng-show="deuCertoShow">
+            <b>Nome:</b> {{ deuCerto.usuario }}<br>
+            <h3>Saldo atual: <span style="color: red;"> {{ deuCerto.saldo | currency}}</span></h3>
+            <b>Valor da recarga:</b> {{ deuCerto.valor | currency}}<br>
+            <b>Número do LOG:</b> {{ deuCerto.log }}
+        </div>
+
+
+    </div>
+
+</div>
+
+</body>
+</html>

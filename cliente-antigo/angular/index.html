@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Teste</title>
+	<script type="text/javascript" src="angular.js"></script>
+	<script type="text/javascript">
+         angular.module('teste', []);
+         angular.module('teste').controller("meuController", ['$scope', '$http', minhafuncao]);
+         
+         function minhafuncao ($scope, $http){
+         	$scope.name = "Eric";
+         	$http.get('http://tst-online.appspot.com/api/group/prog1-20152/ranking').success(function(data){
+         		console.log(data);
+         	});
+         	$scope.aluno = {
+         		name: "Estacio",
+         		caracteristica: "Lindo"
+         	};
+         }
+
+	</script>
+</head>
+<body ng-app="teste">
+<div ng-controller="meuController">
+
+{{ name }}
+{{ aluno['name'] }}
+{{ aluno | json }}
+</div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+/*
+EJDCard - Campina Grande
+Autor: Luciano Júnior
+Ano: 2015
+*/
+body{
+    margin: 0;
+    padding: 0;
+}
+#tudo {
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+}
+header {
+    background-color: #4198ff;
+    height: 150px;
+    font: 120px Dosis;
+    color: #fff;
+    text-align: center;
+}
+#canvas {
+    height: 500px;
+}
+#canvas h1{
+    font: 50px Dosis;
+    color: #245181;
+    width: 370px;
+    text-align: center;
+    margin: 25px auto;
+    border: 2px solid #245181;
+}
+#canvas form {
+    width: 370px;
+    height: 80px;
+    margin: 0 auto;
+}
+#canvas form span{
+    font: 18px Dosis;
+    text-transform: uppercase;
+    font-weight: bold;
+    float: left;
+    margin: 5px 8px 0 0;
+}
+#canvas form input{
+    width: 100px;
+    height: 25px;
+    font: 20px Dosis;
+    color: #4198ff;
+}
+#canvas form button{
+    width: 101px;
+    height: 31px;
+    float: right;
+    font: 20px Dosis;
+    font-weight: bold;
+    color: #245181;
+    background-color: white;
+    border: 1px solid #245181;
+    padding: 0 0 3px 0 ;
+}
+#canvas form button:hover{
+    cursor: pointer;
+    background-color: #245181;
+    color: white;
+}
+#canvas form button:disabled{
+    background-color: #999999;
+    color: #333333;
+    cursor: default;
+}
+#canvas .resultado{
+    margin: 0 auto;
+    width: 370px;
+    height: 200px;
+    font:35px Dosis;
+    color: #4198ff;
+}
+#canvas #inexiste{
+    width: 370px;
+    height: 50px;
+    background-color: #ff5a4f;
+    margin: 0 auto;
+}
+#canvas #inexiste h2{
+    font: 32px Dosis;
+    font-weight: bold;
+    margin:0 auto;
+    color: #000000;
+    text-align: center;
+}
+footer{
+    background-color: #4198ff;
+    height: 60px;
+    position: absolute;
+    bottom: 10px;
+    width: 600px;
+    left: 50%;
+    margin-left: -300px;
+}
+#canvas .preto{
+    margin: 0 auto;
+    width: 370px;
+    height: 200px;
+    font:35px Dosis;
+    color: black;
+}

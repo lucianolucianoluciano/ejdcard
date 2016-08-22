@@ -1,0 +1,15 @@
+/* latin-ext
+@font-face {
+  font-family: 'Dosis';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Dosis Regular'), local('Dosis-Regular'), url(Dosis-Light.eot);
+  src: local('Dosis Regular'), local('Dosis-Regular'), url(Dosis-Light.ttf);
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+    font-family: "Dosis";
+    src: url("Dosis-Light.eot"); /* para IE */
+    src: url("Dosis-Light.ttf");
+}

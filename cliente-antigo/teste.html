@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html ng-app="consulta">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Assembly</title>
+</head>
+<script type="text/javascript" src="angular/angular.js"></script>
+<script type="text/javascript" src="angular-locale_pt-br.js"></script>
+<script type="text/javascript" src="angular/angular-cookies.js"></script>
+<script type="text/javascript">
+    angular.module("consulta", ['ngCookies']);
+    angular.module("consulta").controller("credito", ['$scope', '$cookies', function($scope, $cookies) {
+        // Retrieving a cookie
+        $scope.texto = "Consultar";
+        $scope.clicou = function(){
+            $cookies.put('estacao', $scope.cartao);
+            $scope.texto = "Ok to"+$scope.cartao;
+        };
+
+    }]);
+</script>
+<style>
+    form {
+        width: 300px;
+        height: 240px;
+        background-color: dodgerblue;
+        margin: 0 auto;
+        padding: 30px 0 0 0;
+    }
+    #return {
+        width: 200px;
+        height: 50px;
+        background-color:blue;
+
+    }
+</style>
+<body ng-controller="credito">
+    <form name="formulario">
+        <input type="text" name="cartao" ng-model="cartao"/><button ng-click="clicou()" ng-disabled="botao">{{ texto }}</button>
+    </form>      
+</body>
+</html>

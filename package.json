@@ -15,11 +15,15 @@
     "supertest": "^2.0.0"
   },
   "dependencies": {
+    "angular": "^1.5.8",
+    "angular-ui-router": "^0.3.1",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
+    "bootstrap": "^3.3.7",
     "express": "^4.14.0",
     "jsonwebtoken": "^7.1.9",
     "lodash": "^4.15.0",
-    "mongoose": "^4.5.8"
+    "mongoose": "^4.5.8",
+    "ng-dialog": "^0.6.2"
   }
 }

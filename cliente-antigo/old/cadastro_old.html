@@ -1,0 +1,90 @@
+<!-- favicon -->
+      <link rel="icon" href="favicon.png" type="image/png">
+    <!-- end favicon -->
+
+    <!-- fonts -->
+      <link href='fonts/Dosis.css' rel='stylesheet' type='text/css'>
+    <!-- end fonts -->
+
+    <!--angular general-->
+      <script type="text/javascript" src="angular/angular.js"></script>
+      <script type="text/javascript" src="angular/angular-locale_pt-br.js"></script>
+      <script type="text/javascript" src="angular/angular-cookies.js"></script>
+      <script type="text/javascript" src="angular/angular-sanitize.js"></script>
+    <!-- end angular general -->
+
+    <!-- angular add-ons -->
+      <script type="text/javascript" src="config.js"></script>
+      <script type="text/javascript" src="ejdAPI.js"></script>
+      <script type="text/javascript" src="money.js"></script>
+      <script type="text/javascript" src="celular.js"></script>
+    <!-- end angular add-ons -->
+
+    <!-- local scripts -->
+      <script type="text/javascript" src="cadastro.js"></script>
+    <!-- end local scripts -->
+
+
+<!DOCTYPE html>
+<html ng-app="ejdcard">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>EJDCard - Cadastro</title>
+    <link rel="stylesheet" type="text/css" href="cadastro.css" />
+    <link href='fontes/Dosis.css' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="angular/angular.js"></script>
+    <script type="text/javascript" src="angular/angular-locale_pt-br.js"></script>
+    <script type="text/javascript" src="cadastro.js"></script>
+    <script type="text/javascript" src="angular/angular-cookies.js"></script>
+    <script type="text/javascript" src="money.js"></script>
+    <script type="text/javascript" src="celular.js"></script>
+    <script type="text/javascript" src="angular/angular-sanitize.js"></script>
+    <script type="text/javascript" src="config.js"></script>
+    <script type="text/javascript" src="ejdAPI.js"></script>
+    <link rel="icon" href="favicon.png" type="image/png">
+</head>
+<body ng-controller="cadastro">
+    <div id="tudo">
+        <header>
+            EJDCard
+        </header>
+        <div id="canvas">
+            <h1>Cadastro</h1>
+            <form name="newCartao">
+                <label for="nome">Nome</label>
+                <input type="text" name="nome" ng-model="cartao.nome" id="nome" ng-minlength="10" autocomplete="off">
+
+                <label for="id">Cartão</label>
+                <input type="text" name="id" ng-model="cartao.id" id="id" placeholder="ex:250" ng-pattern="/^[0-9]{1,3}$/" ng-required="true">
+
+                <label for="valorInicial">Valor inicial:</label>
+                <input type="text" name="valorInicial" ng-model="cartao.valorInicial" id="valorInicial" ng-required="true" ng-pattern="/^\d{1,3}\,\d{2}$/" money placeholder="ex: 5,50">
+
+                <label for="celular">Celular</label>
+                <input type="text" name="celular" ng-model="cartao.celular" id="celular" celular>
+
+                <button ng-click="cadastra(cartao)" ng-disabled="newCartao.$invalid || hideBtn">{{ btnTexto }}</button>
+            </form>
+            <!-- ERROS DA VALIDAÇÃO NO LADO DO CLIENTE -->
+            <div class="alert" ng-show="newCartao.nome.$error.minlength">
+                O campo "Nome" deve ter pelo menos 10 caracteres
+            </div>
+
+            <div class="alert" ng-show="newCartao.id.$error.pattern">
+                O campo "Cartão" deve conter um número entre 1 e 700
+            </div>
+            <div class="alert" ng-show="newCartao.valorInicial.$error.pattern">
+                O campo "Valor" deve conter um número no formato "34,50", entre 0,01 e 999,999
+            </div>
+            <!-- ERROS DE VALIDAÇÃO NO LADO DO SERVIDOR -->
+            <div class="alert" ng-show="serverError">
+                {{ serverError }}
+            </div>
+            <!-- EXIBIIÇÃO DA RESPOSTA EM CASO DE SUCESSO -->
+            <div class="sucesso" ng-show="serverResponse" ng-bind-html="serverResponse"></div>
+        </div>
+
+    </div>
+
+</body>
+</html>

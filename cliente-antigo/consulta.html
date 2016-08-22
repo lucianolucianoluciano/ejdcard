@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="ejdcard">
+<head lang="pt-br">
+    <meta charset="UTF-8">
+    <title>EJDCard - Agathe</title>
+    <link rel="stylesheet" type="text/css" href="consulta.css" />
+    <link href='fontes/Dosis.css' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="angular/angular.js"></script>
+    <script type="text/javascript" src="angular/angular-locale_pt-br.js"></script>
+    <script type="text/javascript" src="controllers/consulta.js"></script>
+    <script type="text/javascript" src="angular/angular-cookies.js"></script>
+    <script type="text/javascript" src="config/ejdAPI.js"></script>
+    <script type="text/javascript" src="config/config.js"></script>
+    <link rel="icon" href="favicon.png" type="image/png">
+</head>
+<body ng-controller="consulta">
+    <div id="tudo">
+        <header>
+            EJDCard
+        </header>
+        <div id="canvas">
+            <h1>Consulta de saldo</h1>
+            <form name="consultador" ng-submit="consultar()">
+                <span>Número do cartão:</span>
+                <input type="text" name="numero" ng-model="numero" autocomplete="off">
+                <button ng-click="consultar()" ng-disabled="botao || !numero">{{ texto }}</button>
+            </form>
+            <div ng-class="classedoretorno" ng-show="retorno">
+                <b>Nome:</b> {{ usuario }}<br>
+                <b>Saldo:</b> {{ saldofinal }}<br>
+                <b ng-show="desativado">Cartão desativado</b>
+            </div>
+            <div id="inexiste" ng-show="mostraerro">
+                <h2>Cartão Inexistente</h2>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

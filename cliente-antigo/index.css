@@ -1,0 +1,33 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+#tudo {
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+}
+header {
+    background-color: #4198ff;
+    height: 150px;
+    font: 120px Dosis;
+    color: #fff;
+    text-align: center;
+}
+#canvas {
+    height: 400px;
+    width: 370px;
+    margin: 0 auto;
+    color: #4198ff;
+    font: 20px Dosis;
+    text-align: justify;
+}
+#canvas li a{
+
+    color: #245181;
+    text-decoration: none;
+}
+#canvas li a:hover {
+    text-decoration: underline;
+    color: #4198ff;
+}
