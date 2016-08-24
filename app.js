@@ -12,6 +12,7 @@ var authSignin = require('./routes/signin.js');
 var authMiddle = require('./middleware/interceptor.js');
 
 var app = express();
+app.use('/ejdcard', express.static('cliente'));
 app.use(morgan('dev'));
 
 app.use(function(err, req, res, next){

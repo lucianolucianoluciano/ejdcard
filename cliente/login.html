@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="pt-br">
+    <meta charset="UTF-8">
+    <title>EJDCard - Login</title>
+    
+    <link href='fontes/Dosis.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/login.css"/>
+
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="node_modules/angular-jwt/dist/angular-jwt.min.js"></script>
+    <script src="node_modules/ng-dialog/js/ngDialog.min.js"></script>
+    <script src="node_modules/ngstorage/ngStorage.min.js"></script>
+
+    <!-- Scripts internos do projeto -->
+    <script src="js/modules/ejdcard.js"></script>
+    <script src="js/config/router.js"></script>
+    <script src="js/config/endpoints.js"></script>
+    <script src="js/config/apiRoot.js"></script>
+    <!-- Serviços -->
+    <script src="js/services/ModalService.js"></script>
+    <script src="js/services/RestService.js"></script>
+    <script src="js/services/AuthService.js"></script>
+    <!-- Controllers-->
+    <script src="js/controllers/LoginController.js"></script>
+
+    <link rel="stylesheet" href="node_modules/ng-dialog/css/ngDialog-theme-default.min.css">
+    <link rel="stylesheet" href="css/erro.css">
+
+</head>
+<body ng-app="ejdcard" ng-controller="LoginController as loginCtrl">
+    <div id="box">
+        <img src="img/logo-pequeno.png" alt="EJD Card"/>
+        <form name="ejdcard.login" >
+            <span>terminal</span>
+            <input type="text" name="terminal" ng-model="login.login" placeholder="ex: lojinha1" required/>
+            <span>senha</span>
+            <input type="password" name="senha" ng-model="login.password" required/>
+            <button ng-disabled="loginCtrl.loading || ejdcard.login.$invalid"  ng-click="loginCtrl.logar(login)">logar</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -14,7 +14,8 @@ var logInFn = function(req, res){
 			console.log(err);
 			return res.status(500).json({err:"An error occured at find a user"});
 		} else if (!user){
-			return res.status(406).json({err:"User and/or password are incorrect!"})
+			console.log(req.body.login);
+			return res.status(406).json({err:"User and/or password are incorrect!"});
 		}else{
 			User.checkPassword(req.body.password, user.password, function(err, isMatch){
 				if (err) {

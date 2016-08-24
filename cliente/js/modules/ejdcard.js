@@ -1,1 +1,1 @@
-var app = angular.module('ejdcar', ['ngStorage', 'ui.router', 'ngDialog', 'angular-jwt']);
+var app = angular.module('ejdcard', ['ngStorage', 'ui.router', 'ngDialog', 'angular-jwt']);

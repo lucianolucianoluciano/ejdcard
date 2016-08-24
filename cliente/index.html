@@ -19,17 +19,29 @@
     <!-- Scripts internos do projeto -->
     <script src="js/modules/ejdcard.js"></script>
     <script src="js/config/router.js"></script>
+    <script src="js/config/apiRoot.js"></script>
+    <script src="js/config/endpoints.js"></script>
     <!-- Serviços -->
     <script src="js/services/RestService.js"></script>
+    <script src="js/services/ModalService.js"></script>
     <script src="js/services/AuthService.js"></script>
+    <script src="js/config/token.js"></script>
     <!-- Controllers-->
-    <script src="js/controllers/LoginController.js"></script>
-    
+    <script src="js/controllers/MainController.js"></script>
 
+    <link rel="stylesheet" href="fontes/Dosis.css">
+    <link rel="stylesheet" href="css/geral.css">
+    <link rel="stylesheet" href="css/login.css">
 
   </head>
-  <body>
+  <body ng-app="ejdcard" ng-controller="MainController"> 
 
+    <div class="container-fluid bg-primary">
+      <h1 class="text-center visible-sm visible-md visible-lg" style="font-size: 5em">EJD Card</h1>
+      <h1 class="text-center visible-xs" >EJD Card</h1>
+    </div>
+
+    <div class="interna" ui-view></div>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
