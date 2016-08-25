@@ -4,7 +4,8 @@
     var app = angular.module('ejdcard');
 
     app.constant('ENDPOINTS', {
-        "LOGIN": "access/login/"
+        "LOGIN": "access/login/",
+        'CARTAO': "api/cartao"
     });
 
 })();

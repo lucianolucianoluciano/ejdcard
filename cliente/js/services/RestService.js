@@ -7,15 +7,11 @@ app.service('RestService', ['$http','$q','$localStorage', 'apiRoot', '$window', 
     
     this.request = function (config) {
         var deferred = $q.defer();
-        var accessToken = getToken();
         
         $http({
             method: config.method,
             url: (apiRoot+config.uri),
-            data: config.body || {},
-            headers: {
-                'Authorization': 'JWT '+accessToken
-            }
+            data: config.body || {}
         }).then(
             function (output) {
                 deferred.resolve(output.data);
@@ -25,7 +21,8 @@ app.service('RestService', ['$http','$q','$localStorage', 'apiRoot', '$window', 
                     $window.location.href = "login.html";
                     deferred.reject("Unauthorized");
                 }else{
-                    deferred.reject(output);
+                    var erro = output.data.err || output
+                    deferred.reject(erro);
                 }
             }
         );

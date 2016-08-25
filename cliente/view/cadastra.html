@@ -1,0 +1,61 @@
+<div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-4 col-sm-offset-4 col-xs-12 bg-info">
+          <h2 class="text-center">Cadastro</h2>
+          <form name="newCartao" role="form">
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input class="form-control input-lg" type="text" name="nome" 
+                ng-model="cadastraCtrl.cartao.nome" ng-minlength="10" id="nome" autocomplete="off" placeholder="Ex: Heloisa Policarpo">
+            </div>
+            
+              <div class="row">
+                  <div class="col-xs-6">
+                    <div class="form-group">
+                      <label for="id">Cartão</label>
+                      <input class="form-control input-lg" autocomplete="off" type="text" name="id" ng-model="cadastraCtrl.cartao.id"
+                      ng-pattern="/^[0-9]{1,3}$/" ng-required="true" id="id" placeholder="Ex: 250">
+                    </div>
+                  </div>
+                  <div class="col-xs-6">
+                    <div class="form-group">
+                      <label for="valorInicial">Valor Inicial</label>
+                      <input class="form-control input-lg" autocomplete="off" type="text" name="valorInicial" ng-model="cadastraCtrl.cartao.valorInicial" id="valorInicial" ng-required="true" ng-pattern="/^\d{1,3}\,\d{2}$/" money placeholder="ex: 5,50">
+                    </div>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-8">
+                  <div class="form-group">
+                    <label for="celular">Celular</label>
+                    <input type="text" autocomplete="off" class="form-control input-lg" name="celular"
+                    ng-model="cadastraCtrl.cartao.celular" id="celular" placeholder="ex: (83)98810-9669" celular>
+                  </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="form-group">
+                      <input type="submit" ng-click="cadastraCtrl.cadastra(cadastraCtrl.cartao)" ng-disabled="newCartao.$invalid || hideBtn"
+                      ng-value="cadastraCtrl.btnTexto" class="btn btn-default input-lg pull-right" style="font-size: 24px; margin-top: 31px">
+                    </div>
+                </div>
+              </div>           
+             
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-4 col-sm-offset-4 col-xs-12" style="margin-top: 20px; ">
+          
+          <alerta ng-show="newCartao.nome.$error.minlength" erro="'O campo Nome deve ter pelo menos 10 caracteres'"></alerta>
+          <alerta ng-show="newCartao.id.$error.pattern" erro="'O campo Cartão deve conter um número entre 1 e 700'"></alerta>
+          <alerta ng-show="newCartao.valorInicial.$error.pattern" erro="'O campo Valor deve conter um número no formato 34,50, entre 0,01 e 999,999'"></alerta>
+          <alerta ng-show="serverError" erro="serverError"></alerta>
+
+          <div class="alert alert-success text-center" ng-show="serverResponse" ng-bind-html="serverResponse"></div>
+        
+        </div>
+      </div>
+    </div>

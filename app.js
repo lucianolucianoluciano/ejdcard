@@ -35,7 +35,6 @@ app.use('/ejdcard/api', authMiddle);
 app.use('/ejdcard/access', authLogin);
 
 // Requires auth to create a new user
-// TODO: Only allowed for admin users
 app.use('/ejdcard/api/signin', authSignin);
 
 // Private route to students

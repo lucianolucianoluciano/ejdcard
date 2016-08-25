@@ -1,0 +1,41 @@
+<div id="canvas">
+        <h1>Finalização</h1>
+        <form name="newFinaliza">
+
+            <label for="id">Número do cartão:</label>
+            <input type="text" name="id" ng-keydown="limpar();" ng-model="id" id="id" placeholder="ex:250" ng-pattern="/^[0-9]{1,3}$/" ng-required="true" ng-disabled="formDisabled">
+
+            <button ng-click="finaliza(id);" ng-disabled="newFinaliza.$invalid || hideBtn" ng-bind="btnTexto"></button>
+        </form>
+        <!-- ERROS DA VALIDAÇÃO NO LADO DO CLIENTE -->
+
+        <div class="alert" ng-show="newFinaliza.id.$error.pattern">
+            O campo "Cartão" deve conter um número entre 1 e 700
+        </div>
+
+
+        <!-- ERROS DE VALIDAÇÃO PRIMEIRA NO LADO DO SERVIDOR -->
+
+        <div class="alert" ng-show="serverError" ng-bind-html="serverError"></div>
+
+        <!-- BOX PARA PEDIR CONFIRMAÇÃO DA FINALIZAÇÃO. ACIONADA APÓS RETORNO DO SERVIDOR -->
+
+        <div class="confirma" ng-show="confirmaShow">
+            <b>Nome:</b> {{ confirma.usuario }}<br>
+            <h3>Saldo disponível: <span style="color: red;">{{ confirma.saldo | currency }}</span></h3>
+            <button class="botaoConfirma" ng-click="confirmaConfirmou(confirma);" ng-disabled="confirmaButtonsDisabled">CONFIRMA</button>
+            <button class="botaoCancela" ng-disabled="confirmaButtonsDisabled" ng-click="confirmaCancelou();">CANCELA</button>
+            <div style="clear: both"></div>
+        </div>
+
+        <!-- BOX PARA CONFIRMAR A FINALIZAÇÃO -->
+
+        <div class="deuCerto" ng-show="deuCertoShow">
+            <span style="font-size: 31px; color: #000000">CARTÃO FINALIZADO</span><br>
+            <b>Nome:</b> {{ deuCerto.usuario }}<br>
+            <h3>Último saldo: <span style="color: red;"> {{ deuCerto.saldo | currency}}</span></h3>
+            <b>Número do LOG:</b> {{ deuCerto.log }}
+        </div>
+
+
+    </div>
