@@ -3,14 +3,16 @@ var app = angular.module('ejdcard');
 app.service('MoneyService', ['RestService','$localStorage','ENDPOINTS','jwtHelper','$q', function AuthService(RestService, $localStorage, ENDPOINTS, jwtHelper, $q){
     var self = this;
     
-    this.toInt = function(moneyStr){
+    function toInt(moneyStr){
         var patt = /\d{1,},\d{2}/
         if (!patt.test(moneyStr)){
             return -1;
         }
         moneyStr = moneyStr.replace(',', '');
         return parseInt(moneyStr);
-    };
+    }
+
+    this.toInt = toInt;
 
     this.novoSaldo = function(op, saldo, valor){
         valor = toInt(valor);

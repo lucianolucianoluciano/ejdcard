@@ -9,7 +9,7 @@ module.exports = function(req, res, next){
 		jwt.verify(token, SECRET, function(err, decoded){
 			if (err){
                 console.log(token);
-				res.status(403).json({err: "Verifying the token threw an error"});
+				res.status(403).json({err: "Verifying the token threw an error"}).end();
 			}else{
 				req.user = decoded;
 				next();
@@ -17,6 +17,6 @@ module.exports = function(req, res, next){
 		});
 		
 	}else{
-		res.status(403).json({err: "Not authorized"});
+		res.status(403).json({err: "Not authorized"}).end();
 	}
 }

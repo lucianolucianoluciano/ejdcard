@@ -1,41 +1,68 @@
-<div id="canvas">
-        <h1>Finalização</h1>
-        <form name="newFinaliza">
-
-            <label for="id">Número do cartão:</label>
-            <input type="text" name="id" ng-keydown="limpar();" ng-model="id" id="id" placeholder="ex:250" ng-pattern="/^[0-9]{1,3}$/" ng-required="true" ng-disabled="formDisabled">
-
-            <button ng-click="finaliza(id);" ng-disabled="newFinaliza.$invalid || hideBtn" ng-bind="btnTexto"></button>
+<div class="container-fluid">
+    <div class="row">
+    <div class="col-sm-4 col-sm-offset-4 col-xs-12 bg-info">
+        <h2 class="text-center">Recarga</h2>
+        <form role="form" name="newFinaliza" ng-submit="finalizaCtrl.finaliza(finalizaCtrl.cartao);">
+                
+            <div class="row">
+                <div class="col-xs-6">
+                <div class="form-group">
+                    <label for="id">Número do cartão</label>
+                    <input class="form-control input-lg" type="text" name="id" ng-model="finalizaCtrl.id" id="id" 
+                    placeholder="Ex: 250" ng-pattern="/^[0-9]{1,3}$/" ng-required="true" ng-disabled="finalizaCtrl.formDisabled"
+                    ng-keydown="finalizaCtrl.limpa();">
+                </div>
+                </div>
+                <div class="col-xs-6">
+                <div class="form-group">
+                    <input type="submit" ng-value="finalizaCtrl.btnTexto" class="btn btn-default input-lg pull-right" style="width: 100%;font-size: 20px; margin-top: 31px" ng-click="finalizaCtrl.finaliza(finalizaCtrl.id);" ng-disabled="newFinaliza.$invalid || finalizaCtrl.hideBtn">
+                </div>
+            </div>
+            </div>
+    
+            
         </form>
-        <!-- ERROS DA VALIDAÇÃO NO LADO DO CLIENTE -->
-
-        <div class="alert" ng-show="newFinaliza.id.$error.pattern">
-            O campo "Cartão" deve conter um número entre 1 e 700
-        </div>
-
-
-        <!-- ERROS DE VALIDAÇÃO PRIMEIRA NO LADO DO SERVIDOR -->
-
-        <div class="alert" ng-show="serverError" ng-bind-html="serverError"></div>
-
-        <!-- BOX PARA PEDIR CONFIRMAÇÃO DA FINALIZAÇÃO. ACIONADA APÓS RETORNO DO SERVIDOR -->
-
-        <div class="confirma" ng-show="confirmaShow">
-            <b>Nome:</b> {{ confirma.usuario }}<br>
-            <h3>Saldo disponível: <span style="color: red;">{{ confirma.saldo | currency }}</span></h3>
-            <button class="botaoConfirma" ng-click="confirmaConfirmou(confirma);" ng-disabled="confirmaButtonsDisabled">CONFIRMA</button>
-            <button class="botaoCancela" ng-disabled="confirmaButtonsDisabled" ng-click="confirmaCancelou();">CANCELA</button>
-            <div style="clear: both"></div>
-        </div>
-
-        <!-- BOX PARA CONFIRMAR A FINALIZAÇÃO -->
-
-        <div class="deuCerto" ng-show="deuCertoShow">
-            <span style="font-size: 31px; color: #000000">CARTÃO FINALIZADO</span><br>
-            <b>Nome:</b> {{ deuCerto.usuario }}<br>
-            <h3>Último saldo: <span style="color: red;"> {{ deuCerto.saldo | currency}}</span></h3>
-            <b>Número do LOG:</b> {{ deuCerto.log }}
-        </div>
-
-
     </div>
+    </div>
+</div>
+<!-- box de confirmação de venda -->
+<div class="container-fluid">
+        <!-- box de alerts -->
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4 col-xs-10 col-xs-offset-1" style="margin-top: 20px; ">
+
+            <alerta ng-show="newFinaliza.id.$error.pattern"
+            erro="'O campo Cartão deve conter um numero entre 1 e 700'">
+            </alerta>
+            
+            <alerta ng-show="finalizaCtrl.serverError" erro="finalizaCtrl.serverError"></alerta>
+        </div>
+    </div>
+
+    <div class="row" ng-show="finalizaCtrl.confirmaShow">
+        <div class="col-sm-4 col-sm-offset-4 col-xs-10 col-xs-offset-1" style="margin-top: 20px; border: 3px solid #669; background-color: rgba(255,255,255,0.8); padding-bottom: 10px;">
+            <h3><strong>Nome:</strong> {{ finalizaCtrl.confirma.usuario }} </h3>
+            <h3><strong>Saldo disponível:</strong> {{ finalizaCtrl.confirma.saldo | monify }} </h3>
+            <div class="row">
+                <div class="col-xs-3 col-xs-offset-6">
+                    <button class="btn btn-success" ng-click="finalizaCtrl.confirmaConfirmou(finalizaCtrl.confirma);" ng-disabled="finalizaCtrl.confirmaButtonsDisabled">Confirma</button>
+                </div>
+                <div class="col-xs-3">
+                    <button class="btn btn-danger pull-right" ng-disabled="finalizaCtrl.confirmaButtonsDisabled" ng-click="finalizaCtrl.confirmaCancelou();">Cancela</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- box de sucesso da venda -->
+    <div class="row" ng-show="finalizaCtrl.deuCertoShow">
+        <div class="col-sm-4 col-sm-offset-4 col-xs-12" style="margin-top: 20px;">
+            <div class="alert alert-success" style="border:3px solid rgba(39,100,13,1); font-size: 24px; ">
+                <h3><span style="font-size: 31px; color: #000000">CARTÃO FINALIZADO</span><br></h3>
+                <h2><strong>Nome: <span class="text-danger">{{ finalizaCtrl.deuCerto.usuario }}</span> </strong></h2>
+                <h3><strong>Último saldo: </strong> {{ finalizaCtrl.deuCerto.saldo | monify }} </h3>
+                <h3><strong>Número do LOG: </strong> {{ finalizaCtrl.deuCerto.log }}</h3>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -89,7 +89,7 @@
                 self.confirmaButtonsDisabled = true;
                 self.formDisabled = false;
                 buttonToggle();
-                clear();
+                limpa();
                 self.deuCerto = {
                         usuario: data.owner.name,
                         saldo: data.balance,
@@ -102,13 +102,13 @@
                 self.confirmaButtonsDisabled = true;
                 self.formDisabled = false;
                 buttonToggle();
-                clear();
+                limpa();
                 showError(err);
             });
         };
 
         self.confirmaCancelou = function(){
-            clear();
+            limpa();
             buttonToggle();
             self.formDisabled = false;
             delete self.cartao;

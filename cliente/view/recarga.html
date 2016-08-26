@@ -2,79 +2,72 @@
       <div class="row">
         <div class="col-sm-4 col-sm-offset-4 col-xs-12 bg-info">
           <h2 class="text-center">Recarga</h2>
-          <form role="form" name="newRecarga" ng-submit="recargaCtrl.credito(recargaCtrl.cartao);">
-                  
+          <form role="form" name="newRecarga" ng-submit="recargaCtrl.credito(recargaCtrl.cartao);">    
               <div class="row">
                   <div class="col-xs-4">
                     <div class="form-group">
                       <label for="id">Cartão</label>
                       <input class="form-control input-lg" type="text" name="id" ng-model="recargaCtrl.cartao.id" id="id" 
                       placeholder="Ex: 250" ng-pattern="/^[0-9]{1,3}$/" ng-required="true" ng-disabled="recargaCtrl.formDisabled"
-                      ng-keydown="recargaCtrl.limpar();">
+                      ng-keydown="recargaCtrl.limpa();">
                     </div>
                   </div>
                   <div class="col-xs-4">
                     <div class="form-group">
                       <label for="valor">Valor</label>
-                      <input class="form-control input-lg" type="text" name="valor" ng-keydown="recargaCtrl.limpar();" ng-model="recargaCtrl.cartao.valor" id="valor" ng-required="true" ng-pattern="/^\d{1,3}\,\d{2}$/" money placeholder="ex: 5,50" ng-disabled="recargaCtrl.formDisabled" ng-keydown="recargaCtrl.limpar();">
+                      <input class="form-control input-lg" type="text" name="valor" ng-keydown="recargaCtrl.limpar();" ng-model="recargaCtrl.cartao.valor" id="valor" ng-required="true" ng-pattern="/^\d{1,3}\,\d{2}$/" money placeholder="ex: 5,50" ng-disabled="recargaCtrl.formDisabled" ng-keydown="recargaCtrl.limpa();">
                     </div>
                   </div>
                   <div class="col-xs-4">
                     <div class="form-group">
                       <input type="submit" ng-value="recargaCtrl.btnTexto" class="btn btn-default input-lg pull-right" style="width: 100%;font-size: 20px; margin-top: 31px" ng-click="recargaCtrl.credito(recargaCtrl.cartao);" ng-disabled="newRecarga.$invalid || recargaCtrl.hideBtn">
                     </div>
-                </div>
-              </div>
-              
-                
-              </div>           
-             
+                 </div>
+              </div>             
           </form>
         </div>
       </div>
+</div>
+
+  <!-- box de confirmação de venda -->
+  <div class="container-fluid">
+          <!-- box de alerts -->
+    <div class="row">
+      <div class="col-sm-4 col-sm-offset-4 col-xs-10 col-xs-offset-1" style="margin-top: 20px; ">
+        <alerta ng-show="newRecarga.id.$error.pattern"
+        erro="'O campo Cartão deve conter um numero entre 1 e 700'"></alerta>
+        <alerta ng-show="newRecarga.valor.$error.pattern"
+        erro="'O campo Valor deve conter um número no formato 34,50, entre 0,01 e 999,999'"></alerta>
+        <alerta ng-show="recargaCtrl.serverError" erro="recargaCtrl.serverError"></alerta>
+
+      </div>
     </div>
-    <!-- box de confirmação de venda -->
-    <div class="container-fluid">
-            <!-- box de alerts -->
-      <div class="row">
-        <div class="col-sm-4 col-sm-offset-4 col-xs-12" style="margin-top: 20px; ">
 
-          <alerta ng-show="newRecarga.id.$error.pattern"
-          erro="'O campo Cartão deve conter um numero entre 1 e 700'">
-
-          </alerta>
-          <alerta ng-show="newRecarga.valor.$error.pattern"
-          erro="'O campo Valor deve conter um número no formato 34,50, entre 0,01 e 999,999'"></alerta>
-          
-          <alerta ng-show="recargaCtrl.serverError" erro="recargaCtrl.serverError"></alerta>
+    <div class="row" ng-show="recargaCtrl.confirmaShow">
+      <div class="col-sm-4 col-sm-offset-4 col-xs-10 col-xs-offset-1" style="margin-top: 20px; border: 3px solid #669; background-color: rgba(255,255,255,0.8); padding-bottom: 10px;">
+        <h3><strong>Nome:</strong> {{ recargaCtrl.confirma.usuario }} </h3>
+        <h3><strong>Saldo disponível:</strong> {{ recargaCtrl.confirma.saldo | monify }} </h3>
+        <h3><strong>Saldo após a recarga:</strong> {{ recargaCtrl.confirma.proximoSaldo | monify }} </h3>
+        <div class="row">
+          <div class="col-xs-3 col-xs-offset-6">
+            <button class="btn btn-success" ng-click="recargaCtrl.confirmaConfirmou(recargaCtrl.confirma);" ng-disabled="recargaCtrl.confirmaButtonsDisabled">Confirma</button>
+          </div>
+          <div class="col-xs-3">
+            <button class="btn btn-danger pull-right" ng-disabled="recargaCtrl.confirmaButtonsDisabled" ng-click="recargaCtrl.confirmaCancelou();">Cancela</button>
           </div>
         </div>
       </div>
-
-      <div class="row" ng-show="recargaCtrl.confirmaShow">
-        <div class="col-sm-4 col-sm-offset-4 col-xs-12" style="margin-top: 20px; border: 3px solid #669">
-          <h3><strong>Nome:</strong> {{ recargaCtrl.confirma.usuario }} </h3>
-          <h3><strong>Saldo disponível:</strong> {{ recargaCtrl.confirma.saldo | monify }} </h3>
-          <h2><strong>Valor da recarga:</strong> <span class="text-danger">{{ recargaCtrl.confirma.valor | monify }}</span> </h2>
-          <h3><strong>Saldo após a recarga:</strong> {{ recargaCtrl.confirma.proximoSaldo | monify }} </h3>
-          <div class="row">
-            <div class="col-xs-12">
-              <button class="btn btn-success pull-right" ng-click="recargaCtrl.confirmaConfirmou(recargaCtrl.confirma);" ng-disabled="recargaCtrl.confirmaButtonsDisabled">Confirma</button>
-              <button class="btn btn-danger pull-right" ng-disabled="recargaCtrl.confirmaButtonsDisabled" ng-click="recargaCtrl.confirmaCancelou();">Cancela</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- box de sucesso da venda -->
-      <div class="row" ng-show="recargaCtrl.deuCertoShow">
-        <div class="col-sm-4 col-sm-offset-4 col-xs-12" style="margin-top: 20px;">
-          <div class="alert alert-success" style="border:3px solid rgba(39,100,13,1); font-size: 24px; ">
-            <h3><strong>Nome:</strong> {{ recargaCtrl.deuCerto.usuario }}</h3>
-            <h2><strong>Saldo atual: <span class="text-danger">{{ recargaCtrl.deuCerto.saldo | monify }}</span> </strong></h2>
-            <h3><strong>Valor da última recarga: </strong> {{ recargaCtrl.deuCerto.valor | monify }} </h3>
-            <h3><strong>Número do LOG: </strong> {{ recargaCtrl.deuCerto.log }}</h3>
-          </div>
-        </div>
-      </div>
-
     </div>
+    <!-- box de sucesso da venda -->
+    <div class="row" ng-show="recargaCtrl.deuCertoShow">
+      <div class="col-sm-4 col-sm-offset-4 col-xs-12" style="margin-top: 20px;">
+        <div class="alert alert-success" style="border:3px solid rgba(39,100,13,1); font-size: 24px; ">
+          <h3><strong>Nome:</strong> {{ recargaCtrl.deuCerto.usuario }}</h3>
+          <h2><strong>Saldo atual: <span class="text-danger">{{ recargaCtrl.deuCerto.saldo | monify }}</span> </strong></h2>
+          <h3><strong>Valor da última recarga: </strong> {{ recargaCtrl.deuCerto.valor | monify }} </h3>
+          <h3><strong>Número do LOG: </strong> {{ recargaCtrl.deuCerto.log }}</h3>
+        </div>
+      </div>
+    </div>
+
+  </div>

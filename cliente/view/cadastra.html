@@ -52,9 +52,9 @@
           <alerta ng-show="newCartao.nome.$error.minlength" erro="'O campo Nome deve ter pelo menos 10 caracteres'"></alerta>
           <alerta ng-show="newCartao.id.$error.pattern" erro="'O campo Cartão deve conter um número entre 1 e 700'"></alerta>
           <alerta ng-show="newCartao.valorInicial.$error.pattern" erro="'O campo Valor deve conter um número no formato 34,50, entre 0,01 e 999,999'"></alerta>
-          <alerta ng-show="serverError" erro="serverError"></alerta>
+          <alerta ng-show="cadastraCtrl.serverError" erro="cadastraCtrl.serverError"></alerta>
 
-          <div class="alert alert-success text-center" ng-show="serverResponse" ng-bind-html="serverResponse"></div>
+          <div class="alert alert-success text-center" ng-show="cadastraCtrl.serverResponse" ng-bind-html="cadastraCtrl.serverResponse" style="font-size: 25px;"></div>
         
         </div>
       </div>

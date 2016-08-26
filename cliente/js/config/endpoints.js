@@ -5,7 +5,7 @@
 
     app.constant('ENDPOINTS', {
         "LOGIN": "access/login/",
-        'CARTAO': "api/cartao"
+        'CARTAO': "api/card"
     });
 
 })();

@@ -3,7 +3,7 @@
 
     var app = angular.module('ejdcard');
 
-    app.controller('MainController', ['AuthService','ModalService','$window','ENDPOINTS','RestService', function(AuthService, ModalService, $window, ENDPOINTS, RestService){
+    app.controller('FinalizaController', ['AuthService','ModalService','$window','ENDPOINTS','RestService', function(AuthService, ModalService, $window, ENDPOINTS, RestService){
         
         var self = this;
 
@@ -15,11 +15,13 @@
 
         self.confirmaButtonsDisabled = false;
 
-        function clear(){
+        function limpa(){
             self.serverError = false;
             self.confirmaShow = false;
             self.deuCertoShow = false;
         };
+
+        this.limpa = limpa;
 
         function showError(texto){
             self.serverError = texto;
@@ -35,7 +37,7 @@
         })();
 
         self.finaliza = function(id){
-            clear();
+            limpa();
             buttonToggle();
             self.confirmaButtonsDisabled = false;
             var config = {
@@ -44,7 +46,7 @@
             };
             RestService.request(config).then(function(result){
                 if (!result.active){
-                    showError('O cartão '+data.id+' já foi finalizado');
+                    showError('O cartão '+result._id+' já foi finalizado');
                     return buttonToggle();
                 }
                 self.formDisabled = true;
@@ -62,35 +64,37 @@
 
         self.confirmaConfirmou = function (dados) {
             self.confirmaButtonsDisabled = true;
-            dados.estacao = $cookies.get('estacao');
-            ejdAPI.putFinaliza(dados).success(function(data){
-                if (data.erro == "1"){
-                    self.confirmaButtonsDisabled = true;
-                    self.formDisabled = false;
-                    buttonToggle();
-                    clear();
-                    showError(data.stringErro);
-                }else{
-                    self.confirmaButtonsDisabled = true;
-                    self.formDisabled = false;
-                    buttonToggle();
-                    clear();
-                    console.log(dados);
-                    self.deuCerto = {
-                        usuario: data.usuario,
-                        saldo: data.saldo,
-                        log: data.lognum
-                    };
-                    self.deuCertoShow = true;
-                    delete self.id;
+            var config = {
+                method: 'patch',
+                uri: ENDPOINTS.CARTAO + '/' + dados.id,
+                body: {
+                    active: false
                 }
-            }).error(function(data){
-
+            };
+            RestService.request(config).then(function(result){
+                self.confirmaButtonsDisabled = true;
+                self.formDisabled = false;
+                buttonToggle();
+                limpa();
+                console.log(dados);
+                self.deuCerto = {
+                    usuario: result.owner.name,
+                    saldo: result.balance,
+                    log: result.logId
+                };
+                self.deuCertoShow = true;
+                delete self.id;
+            }, function(err){
+                self.confirmaButtonsDisabled = true;
+                self.formDisabled = false;
+                buttonToggle();
+                limpa();
+                showError(data.stringErro);
             });
         };
 
         self.confirmaCancelou = function(){
-            clear();
+            limpa();
             buttonToggle();
             self.formDisabled = false;
             delete self.id;

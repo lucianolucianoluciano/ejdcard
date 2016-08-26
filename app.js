@@ -6,10 +6,13 @@ var morgan = require('morgan');
 
 global.secret = 'foratemer';    
 mongoose.Promise = global.Promise
+
 var authLogin = require('./routes/login.js');
 var authSignin = require('./routes/signin.js');
-
 var authMiddle = require('./middleware/interceptor.js');
+
+var cardRouter = require('./routes/card.js');
+var logRouter = require('./routes/log.js');
 
 var app = express();
 app.use('/ejdcard', express.static('cliente'));
@@ -26,7 +29,7 @@ app.use(bodyParser.urlencoded({
 	extended: true
 }));
 
-mongoose.connect('mongodb://localhost/ejdcard');
+var connection = mongoose.connect('mongodb://localhost/ejdcard');
 
 // Requires authentication to every request to /api
 app.use('/ejdcard/api', authMiddle);
@@ -36,6 +39,10 @@ app.use('/ejdcard/access', authLogin);
 
 // Requires auth to create a new user
 app.use('/ejdcard/api/signin', authSignin);
+
+app.use('/ejdcard/api/card', cardRouter);
+
+app.use('/ejdcard/api/log', logRouter);
 
 // Private route to students
 

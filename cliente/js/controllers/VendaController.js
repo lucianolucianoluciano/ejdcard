@@ -29,6 +29,8 @@
             self.deuCertoShow = false;
         };
 
+        self.limpa = limpa;
+
         function buttonToggle(){
             self.btnTexto = (self.btnTexto == "Aguarde") ? "Vender" : "Aguarde";
             self.hideBtn = !self.hideBtn;
@@ -50,6 +52,10 @@
                 uri: ENDPOINTS.CARTAO + '/' + cartao.id
             };
 
+            if (MoneyService.toInt(cartao.valor) === 0){
+                buttonToggle();
+                return showError('O valor da compra deve ser maior que 0.');
+            } 
             RestService.request(config).then(function(cartaoServidor){
                 if (!cartaoServidor.active){
                     buttonToggle();
@@ -71,8 +77,7 @@
                 self.confirmaShow = true;
             }, function(err){
                 buttonToggle();
-                console.log(err);
-                showError("Ocorreu um erro :( ")
+                showError(err);
             });
         }
 
@@ -91,11 +96,10 @@
                 self.confirmaButtonsDisabled = true;
                 self.formDisabled = false;
                 buttonToggle();
-                clear();
+                limpa();
                 self.deuCerto = {
                         usuario: data.owner.name,
                         saldo: data.balance,
-                        valor: data.valor,
                         log: data.logId
                 };
                 self.deuCertoShow = true;
@@ -110,7 +114,7 @@
         };
 
         self.confirmaCancelou = function(){
-            clear();
+            limpa();
             buttonToggle();
             self.formDisabled = false;
             delete self.cartao;

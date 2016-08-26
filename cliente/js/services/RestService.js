@@ -21,7 +21,7 @@ app.service('RestService', ['$http','$q','$localStorage', 'apiRoot', '$window', 
                     $window.location.href = "login.html";
                     deferred.reject("Unauthorized");
                 }else{
-                    var erro = output.data.err || output
+                    var erro = output.data.error || output
                     deferred.reject(erro);
                 }
             }

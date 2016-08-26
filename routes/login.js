@@ -26,7 +26,7 @@ var logInFn = function(req, res){
 				}else{
 					var payload = user.profile;
 					jwt.sign(payload, SECRET, { algorithm: 'HS256' }, function(err, token) {
-					  res.json({token: token});
+					  	res.status(200).json({token: token}).end();
 					});
 				}
 			});
