@@ -7,9 +7,17 @@ var User = require('../model/user.js');
 var jwt = require('jsonwebtoken');
 
 var SECRET = global.secret;
+/**
+ * Function that maps POST User Router.
+ * 
+ * User should contain {login, name, password} properties
+ * @param {*} req 
+ * @param {*} res 
+ */
 var signInFn = function(req, res){
 
-	User.getUserByUsername(req.body.login, function(err, user){
+	User.getUserByUsername(req.body.
+	, function(err, user){
 		if (err){
             console.log(err);
 			return res.status(500);
