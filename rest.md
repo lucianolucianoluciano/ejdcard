@@ -1,5 +1,3 @@
-1. implementar JWT.
-
 GET /:id
     Recupera os dados de um objeto Cartão com o id infomrado
 
