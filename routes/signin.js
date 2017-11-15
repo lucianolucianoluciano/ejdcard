@@ -16,8 +16,7 @@ var SECRET = global.secret;
  */
 var signInFn = function(req, res){
 
-	User.getUserByUsername(req.body.
-	, function(err, user){
+	User.getUserByUsername(req.body._id, function(err, user){
 		if (err){
             console.log(err);
 			return res.status(500);
@@ -36,9 +35,8 @@ var signInFn = function(req, res){
 		    		level: 1,
 		    		isAdmin: true
 		    	}
-		    });
-
-
+			});
+			
 		    User.hashifyAndSave(newUser, function(err){
 		    	if (err){
                     console.log(err)
@@ -47,12 +45,8 @@ var signInFn = function(req, res){
 		    		res.status(201).end();
 		    	}
 		    });
-
 		}
-
 	});
-
-    
 };
 
 
