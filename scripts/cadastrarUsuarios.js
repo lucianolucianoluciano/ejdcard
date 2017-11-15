@@ -51,12 +51,11 @@ function criaUsuarios() {
 		    		isAdmin: false
 		    	}
             }];
-            User.collection.insert(usuarios, (err, docs)=>{
-                if (err){
-                    return done(err);
-                }
-                return done();
+            usuarios.forEach((user)=>{
+                const novo = new User(user);
+                User.hashifyAndSave(novo, ()=>{});
             });
+            done();
         }], (err, ok)=>{
             if (err){
                 console.log(err);
